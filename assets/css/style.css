@@ -1,8 +1,8 @@
 .fighter{
     width           : 150px;
     height              : 150px;
-    border              : 1px solid black;
-    background-color    : white;
+    border              : 1px solid grey;
+    background-color    : rgb(63, 63, 63);
     /* float               : left; */
     margin              : 5px;
     align-content       : center;
@@ -12,24 +12,64 @@
 zoom: 150%;
 
 }
+.giant{
+margin: auto;
+width: 1000px;
 
+
+
+}
 .container{
 
     width               : auto;
     height              : 300px;
-    border              : 3px double black;
+    border              : 3px double rgb(75, 117, 255);
     display             : inline-block;
-    /* margin           : auto; */
+    margin           : auto;
     padding             : 5px;
+    background-color: rgba(236, 250, 255, 0.507);
 }
 
-h3{
+h1, h3, .header{
     text-align          : center;
+
 }
 
+.header{
+ background-color: white;
+ border: 4px ridge grey;
+max-width: 300px;
+margin: auto;
+
+}
 .health-bar-span{
 color: red;
 background-color: white;
-border: 1px solid black;
+border: 1px solid grey;
 
+}
+
+button{
+    margin: 20px;
+    width: 200px;
+    height: 100px;
+    background-color: rgb(104, 0, 0);
+}
+
+.container-pick{
+
+    border              : 3px double rgb(0, 60, 255);
+    color: rgb(0, 60, 255);
+}
+
+.container-rest{
+ 
+    border              : 3px double rgb(255, 255, 255);
+    color: white;
+}
+.container-ring{
+ width: 250px;
+margin: auto;
+border: 3px double red;
+color: red;
 }

@@ -8,6 +8,10 @@
     <title>Battle Game</title>
 
     <style>
+        
+        body{
+            background-image: url(./assets/images/arena.jpg);
+        }
 
     </style>
 
@@ -15,34 +19,42 @@
 </head>
 
 <body>
-<h1>Battle for the Glory</h1>
 
-<div class = "container container-pick">
-    <h3>Pick one fighter to battle the rest!</h3>
+    <div class = "header">   <h1>Battle for Glory</h1>   </div>
+  
+    <br>
+
+<div class = "giant">
+
+    <div class = "container container-pick">
+        <h3>The Blue Corner: Take your pick!</h3>
     </div>
 
-</div>    
+   
 
+    <br>
+    <br>
 
-<br>
+    <div class = "container container-rest">
+        <h3>Pick your Opponent.</h3>
+    </div>
 
-<div class = "container container-remains">
-<h3>Pick the enemy you wish to fight.</h3>
-</div>
+    <br>
 
-<br>
+    <button class = "attack-button">Attack</button>
+    <br>
 
-<div class = "container container-battlefield">
-<h3>Battlefield</h3>
-
-
-</div>
-<!-- Javascript and jQuery start here -->
-<!-- Linking jQuery library -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
-<script type="text/javascript" src = "./assets/javascript/game.js">
+    <div class = "container container-ring">
+        <h3>The Red Corner</h3>
+    </div>
+    <!-- Javascript and jQuery start here -->
+    <!-- Linking jQuery library -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+    <script type="text/javascript" src = "./assets/javascript/game.js">
       
-</script>
+    </script>
+
+</div>
 </body>
 
 </html>
