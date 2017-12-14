@@ -88,3 +88,7 @@ margin: auto; */
 border: 3px double red;
 color: red;
 }
+
+.defeated{
+    display: none;
+}

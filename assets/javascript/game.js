@@ -4,7 +4,7 @@ var indexNumber = [0,1,2,3];
 var counterAttack = [25,50,75,80];
 var fighterName = ["Bruce Lee", "Muhammad Ali", "Fedor", "Chuck Norris"];
 
-var damageCounter =0;
+// var damageCounter = 0;
 
 for(var i =0; i < healthBar.length; i++){
     var hasBeenClicked = false;
@@ -36,23 +36,10 @@ for(var i =0; i < healthBar.length; i++){
     $(".container-pick").append(imageFighter);
     // $(".fighter").append(healthBarSpan);
 }
-//----------------------------------close for loop------
-
-
-// $(function sortIfPickedBlue(){
-//     //check if something has been clicked.
-//     if (hasBeenClicked) {        
-//         if(!hasBeenClicked){
-//             $(".container-rest").append(imageFighter);
-//         }
-//     }   
-// })
-
-
-
+//----------------------------------close for loop-----
 
 //------start on click events-----
-
+// when you pick your fighter and move the others
 $(document).on("click", ".fighter", function() {
     var hasBeenClicked = true;
     
@@ -61,20 +48,6 @@ $(document).on("click", ".fighter", function() {
     
     var myPick = $(this);
     myPick.addClass("my-pick");
-
-//try to sort by id number
-    // var id = myPick.attr("id");
-    // var choices = $(".my-pick");
-    
-//     for(var i = 0; i < choices.length; i++ ){
-//         var currentChoice = choices [i];
-//         console.log(currentChoice);
-//         console.log(indexNumber);
-//         if($(currentChoice).attr("id") !== id){
-//             $(".container-rest").append(currentChoice);
-            
-//         }
-//    }
 
     $("img").each(function() {
         if ($(this).hasClass("my-pick")) {
@@ -88,7 +61,7 @@ $(document).on("click", ".fighter", function() {
 
 });
 
-
+//picking an opponent to move to red corner
 $(document).on("click",".enemy", function(){
 
     var myPick = $(this);
@@ -97,61 +70,20 @@ $(document).on("click",".enemy", function(){
     $(".enemy").each(function() {
         if ($(this).hasClass("my-opponent")) {
             $(".container-ring").append($(this));
-        } else {
-            $(".container-rest").append($(this));
-           
+        } 
+        else {
+            $(".container-rest").append($(this)); 
         }
     })
-
 });
 
-if ($(".container-ring").has(".my-opponent")){
-console.log("ready for fight");
-
-}
+// if p is in a div
 
 
-//when you click on a fight class
-// $(document).on("click",".fighter", function () {
-// //$(".fighter").on("click", function() {
-//     var hasBeenClicked = true;
-//     console.log(hasBeenClicked);
-    
-//       var id = ($(this).attr("data-indexNumber"));
-//     id = parseInt(id);
-    
-//     var myPick = $(this);
-//     myPick.addClass("my-pick");
+// if ($(".container-ring").has(".my-opponent")){
+// console.log("ready for fight");
+// }
 
-// //try to sort by id number
-//     var id = myPick.attr("id");
-//     var choices = $(".my-pick");
-    
-//     for(var i = 0; i < choices.length; i++ ){
-//         var currentChoice = choices [i];
-//         console.log(currentChoice);
-//         console.log(indexNumber);
-//             if($(currentChoice).attr("id") !== id){
-//                 $(".container-rest").append(currentChoice);
-               
-//             }
-//    }
-            
-//     console.log("should've changed class to my-pick");
-//     console.log(myPick);
-
-// function takeAway(){
-    
-//     //if an image doesn't have my-pick class
-// if($("img").hasClass("my-pick")){
-//         $(".container-rest").append(imageFighter);
-//         console.log("takeaway");
-
-//     }
-// }   
-// takeAway();
-   
-// })
 
 
 
@@ -159,28 +91,44 @@ console.log("ready for fight");
 //this is for the fight.. needs work
 // //when you click on a attack class
 $(".attack-button").on("click", function() {
-
-    //this for this clicked fighter
-    var damageValue = ($(".my-pick").attr("data-attackPower"));
-   
-    //parses string (html attribute) into integer
-    damageValue = parseInt(damageValue);
-
-    // every click adds to global counter. will need to be changed
-    damageCounter += damageValue;
-
+    var damageCounter = 0;
+    //is there an opponent inthe red corner
+    if ($(".my-opponent").parent().is(".container-ring")) {
+        
+        //damage and health values for both fighters
+        var damageValue = ($(".my-pick").attr("data-attackPower"));
+        var counterValue = ($(".my-opponent").attr("data-counterAttack"));
+        var myHealthRemaining = ($(".my-pick").attr("data-healthBar"));
+        var oppHealthRemaining = ($(".my-opponent").attr("data-healthBar"));
     
-    var hasBeenClicked = true;
+        //parses string (html attribute) into integer
+        damageCounter = parseInt(damageCounter);
+        damageValue = parseInt(damageValue);
+        counterValue = parseInt(counterValue);
+        myHealthRemaining = parseInt(myHealthRemaining);
+        oppHealthRemaining = parseInt(oppHealthRemaining);
 
+        //your fighter gains power throughout the tournament
+        damageCounter = damageCounter + damageValue;
+        
+        myHealthRemaining = myHealthRemaining - counterValue;
+        oppHealthRemaining = oppHealthRemaining - damageCounter;
 
-    // run a function  that sorts after someone is picked.
+        // every click adds to global counter. will need to be changed
+        
+        var hasBeenClicked = true; 
+
+        console.log("attack for " + damageCounter);
+        console.log("enemy counters for " + counterValue);
+        console.log("my health is " + myHealthRemaining);
+        console.log("opponent health is " + oppHealthRemaining);
+
+        if(oppHealthRemaining <= 0){
+            console.log("opp lost");
+            //change class defeated to make them disappear.
+            $(".my-opponent").attr("class", "defeated");
+        }
+    }     
     
-    console.log("you clicked a fighter. Counter =" + damageCounter);
     
 })
-
-
-
-//this moves from one element to another. 
-// // $(target_element).append(to_be_inserted_element)
-
