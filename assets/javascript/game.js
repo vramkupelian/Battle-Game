@@ -2,6 +2,7 @@ var healthBar = [100, 200, 300, 400];
 var attackPower = [200,175,150,125];
 var indexNumber = [0,1,2,3];
 var counterAttack = [25,50,75,80];
+var fighterName = ["Bruce Lee", "Muhammad Ali", "Fedor", "Chuck Norris"];
 
 var damageCounter =0;
 
@@ -11,23 +12,25 @@ for(var i =0; i < healthBar.length; i++){
     
     //For each iteration, create an imageFighter
     var imageFighter = $("<img>");
-    
-    // var healthBarSpan = $ ("<span>");
+    var healthBarSpan = $ ("<span>");
+    var nameSpan = $("<span>");
     // divForImage.addClass("div-for-image");
     
     //give each imageFighter the class "fighter", css
     imageFighter.addClass("fighter");
-    
-    // healthBarSpan.addClass("health-bar-span");
+    healthBarSpan.addClass("health-bar-span");
+    nameSpan.addClass("name-span");
 
     // Each imageFighter will be given a src link to the image
     imageFighter.attr("src", "./assets/images/fighter" + i + ".jpg");
  
     //Each fighter will get a data attribute "data-healthBar", set = healthBar array. etc.
     imageFighter.attr("data-healthBar", healthBar[i]);
+    healthBarSpan.text(healthBar[i]);
     imageFighter.attr("data-attackPower", attackPower[i]);
     imageFighter.attr("data-counterAttack", counterAttack[i]);
     imageFighter.attr("data-indexNumber", indexNumber[i]);
+    imageFighter.attr("data-fighterName", fighterName[i]);
 
     //add to page
     $(".container-pick").append(imageFighter);
@@ -49,56 +52,108 @@ for(var i =0; i < healthBar.length; i++){
 
 
 //------start on click events-----
-//when you click on a fight class
-$(".fighter").on("click", function() {
+
+$(document).on("click", ".fighter", function() {
     var hasBeenClicked = true;
-    console.log(hasBeenClicked);
     
-      var id = ($(this).attr("data-indexNumber"));
+    var id = ($(this).attr("data-indexNumber"));
     id = parseInt(id);
     
     var myPick = $(this);
     myPick.addClass("my-pick");
 
 //try to sort by id number
-    var id = myPick.attr("id");
-    var choices = $(".my-pick");
+    // var id = myPick.attr("id");
+    // var choices = $(".my-pick");
     
-    for(var i = 0; i < choices.length; i++ ){
-        var currentChoice = choices [i];
-        console.log(currentChoice);
-        console.log(indexNumber);
-            if($(currentChoice).attr("id") !== id){
-                $(".container-rest").append(currentChoice);
+//     for(var i = 0; i < choices.length; i++ ){
+//         var currentChoice = choices [i];
+//         console.log(currentChoice);
+//         console.log(indexNumber);
+//         if($(currentChoice).attr("id") !== id){
+//             $(".container-rest").append(currentChoice);
+            
+//         }
+//    }
+
+    $("img").each(function() {
+        if ($(this).hasClass("my-pick")) {
+            $(".container-pick").append($(this));
+        } else {
+            $(".container-rest").append($(this));
+           //change class from fighter to enemy
+            $(this).attr("class","enemy");
+        }
+    })
+
+});
+
+
+$(document).on("click",".enemy", function(){
+
+    var myPick = $(this);
+    myPick.addClass("my-opponent");
+
+    $(".enemy").each(function() {
+        if ($(this).hasClass("my-opponent")) {
+            $(".container-ring").append($(this));
+        } else {
+            $(".container-rest").append($(this));
+           
+        }
+    })
+
+});
+
+if ($(".container-ring").has(".my-opponent")){
+console.log("ready for fight");
+
+}
+
+
+//when you click on a fight class
+// $(document).on("click",".fighter", function () {
+// //$(".fighter").on("click", function() {
+//     var hasBeenClicked = true;
+//     console.log(hasBeenClicked);
+    
+//       var id = ($(this).attr("data-indexNumber"));
+//     id = parseInt(id);
+    
+//     var myPick = $(this);
+//     myPick.addClass("my-pick");
+
+// //try to sort by id number
+//     var id = myPick.attr("id");
+//     var choices = $(".my-pick");
+    
+//     for(var i = 0; i < choices.length; i++ ){
+//         var currentChoice = choices [i];
+//         console.log(currentChoice);
+//         console.log(indexNumber);
+//             if($(currentChoice).attr("id") !== id){
+//                 $(".container-rest").append(currentChoice);
                
-            }
-   }
+//             }
+//    }
+            
+//     console.log("should've changed class to my-pick");
+//     console.log(myPick);
+
+// function takeAway(){
     
-        
-    console.log("should've changed class to my-pick");
-    console.log(myPick);
+//     //if an image doesn't have my-pick class
+// if($("img").hasClass("my-pick")){
+//         $(".container-rest").append(imageFighter);
+//         console.log("takeaway");
 
-function takeAway(){
-    
-    //if an image doesn't have my-pick class
-if($("img").hasClass("my-pick")){
-        $(".container-rest").append(imageFighter);
-        console.log("takeaway");
+//     }
+// }   
+// takeAway();
+   
+// })
 
-    }
-}   
-takeAway();
-    // function checkIfBlue (){
-        //    //if you have not been clicked
-        //     if(myPick){
-        //         $(".fighter").addClass("enemy");
-        //         $(".container-rest").append(imageFighter);
-        //         console.log("add enemy class and move to container-rest");
-        //     }
-        // }    
 
-// checkIfBlue();
-})
 
 
 //this is for the fight.. needs work
@@ -106,7 +161,7 @@ takeAway();
 $(".attack-button").on("click", function() {
 
     //this for this clicked fighter
-    var damageValue = ($(this).attr("data-attackPower"));
+    var damageValue = ($(".my-pick").attr("data-attackPower"));
    
     //parses string (html attribute) into integer
     damageValue = parseInt(damageValue);
