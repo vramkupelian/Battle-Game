@@ -1,8 +1,8 @@
-var healthBar = [100, 200, 300, 400];
-var attackPower = [100,150,175,200];
-var counterAttack = [100,75,50,25];
+var healthBar = [50, 100, 150, 200];
+var attackPower = [10,15,18,20];
+var counterAttack = [10,8,5,3];
 var fighterName = ["Bruce Lee", "Muhammad Ali", "Fedor", "Chuck Norris"];
-var myHealthRemaining;
+
 
 //creating elements
 for(var i =0; i < healthBar.length; i++){
@@ -13,8 +13,9 @@ for(var i =0; i < healthBar.length; i++){
     var nameSpan = $("<span>");
     
     //give each imageFighter the class "fighter", css
+   
     imageFighter.addClass("fighter");
-    healthBarSpan.addClass("health-bar-span");
+    // healthBarSpan.addClass("health-bar-span");
     nameSpan.addClass("name-span");
 
     // Each imageFighter will be given a src link to the image
@@ -22,15 +23,19 @@ for(var i =0; i < healthBar.length; i++){
  
     //Each fighter will get a data attribute "data-healthBar", set = healthBar array. etc.
     imageFighter.attr("data-healthBar", healthBar[i]);
-    healthBarSpan.text(healthBar[i]);
+    // healthBarSpan.html(healthBar[i]);
+    // nameSpan.html(nameSpan[i]);
     imageFighter.attr("data-attackPower", attackPower[i]);
     imageFighter.attr("data-counterAttack", counterAttack[i]);
     imageFighter.attr("data-fighterName", fighterName[i]);
 
     //add to page
     $(".container-pick").append(imageFighter);
-    $(".fighter").append(healthBarSpan);
+    // $(imageFighter).append(healthBarSpan);
+    // $(nameSpan).append(nameSpan);
+    $(".fighter").html("<span>" + healthBar[i] + "</span>");
 }
+
 
 // when you pick your fighter and move the others
 
@@ -72,15 +77,17 @@ $(document).on("click",".enemy", function(){
 
 //this is for the fight.. needs work
 // //when you click on a attack class
-   var damageCounter = 0;
-    var totalDamageTaken = 0;
-
+    var damageCounter = 0;
+    var totalDamageTaken =0 ;
 $(".attack-button").on("click", function() {
-  
-    //if there are fighters in both red and blue corners
+
+    var myHealthRemaining;
+    var oppHealthRemaining; 
+    //only work if there are fighters in both red and blue corners
     if ($(".my-opponent").parent().is(".container-ring") 
     &&  $(".my-pick").parent().is(".container-pick")) {
         
+        //show the attack information
         $(".empty-log").attr("class","battle-log");
 
         console.log("========begin attack==========");
@@ -89,7 +96,7 @@ $(".attack-button").on("click", function() {
         var damageValue = ($(".my-pick").attr("data-attackPower"));
         var counterValue = ($(".my-opponent").attr("data-counterAttack"));
         myHealthRemaining = ($(".my-pick").attr("data-healthBar"));
-        var oppHealthRemaining = ($(".my-opponent").attr("data-healthBar"));
+        oppHealthRemaining = ($(".my-opponent").attr("data-healthBar"));
                 
         //parses string (html attribute) into integer
         damageCounter = parseInt(damageCounter);
@@ -98,24 +105,17 @@ $(".attack-button").on("click", function() {
         myHealthRemaining = parseInt(myHealthRemaining);
         oppHealthRemaining = parseInt(oppHealthRemaining);
 
-        //your fighter gains power throughout the tournament
-        damageCounter = damageCounter + damageValue;
+
+        //your fighter gains power throughout the tournament ... 
+        damageCounter =  damageCounter + damageValue ;
         totalDamageTaken = totalDamageTaken + counterValue;
         myHealthRemaining = myHealthRemaining - totalDamageTaken;
         oppHealthRemaining = oppHealthRemaining - damageCounter;
     
-        var informAttack = $(".battle-log").html(
-            "You attack for " + damageCounter + "<br>" +
-            "Enemy attacks for " + counterValue
-        );
-
-
         //if opponent health is 0, they lose
         if(oppHealthRemaining <= 0){
 
-            $(".battle-log").html("You attack for " + damageCounter + "<br>" +
-            "Enemy attacks for " + counterValue + "<br>" + 
-            "Opponent lost!");
+            $(".battle-log").html("You attack for " + damageCounter + "<br>" + "Opponent lost!");
                  
             //if opponent loses, i don't count their last hit. works
             myHealthRemaining = myHealthRemaining + counterValue;
@@ -123,8 +123,6 @@ $(".attack-button").on("click", function() {
             
             //change class to 'defeated' to make them disappear.
             $(".my-opponent").attr("class", "defeated");
-            console.log("my health after the fight is " + myHealthRemaining);
-            console.log("total damage taken is " + totalDamageTaken);
             console.log("next fight================");
             
         }
@@ -148,6 +146,13 @@ $(".attack-button").on("click", function() {
             console.log("opponent health is " + oppHealthRemaining);
             console.log("total damage taken " + totalDamageTaken);
             console.log("my health after the attack is " + myHealthRemaining);
+            var informAttack = $(".battle-log").html(
+                "You attack for " + damageCounter + "<br>" +
+                "Enemy attacks for " + counterValue
+            );
+    
+    
+            
         }
     }     
     
