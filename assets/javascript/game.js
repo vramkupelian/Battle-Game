@@ -1,20 +1,16 @@
 var healthBar = [100, 200, 300, 400];
-var attackPower = [200,175,150,125];
-var indexNumber = [0,1,2,3];
-var counterAttack = [25,50,75,80];
+var attackPower = [100,150,175,200];
+var counterAttack = [100,75,50,25];
 var fighterName = ["Bruce Lee", "Muhammad Ali", "Fedor", "Chuck Norris"];
+var myHealthRemaining;
 
-// var damageCounter = 0;
-
+//creating elements
 for(var i =0; i < healthBar.length; i++){
-    var hasBeenClicked = false;
-    // var divForImage = $("<div>");
     
     //For each iteration, create an imageFighter
     var imageFighter = $("<img>");
     var healthBarSpan = $ ("<span>");
     var nameSpan = $("<span>");
-    // divForImage.addClass("div-for-image");
     
     //give each imageFighter the class "fighter", css
     imageFighter.addClass("fighter");
@@ -29,23 +25,17 @@ for(var i =0; i < healthBar.length; i++){
     healthBarSpan.text(healthBar[i]);
     imageFighter.attr("data-attackPower", attackPower[i]);
     imageFighter.attr("data-counterAttack", counterAttack[i]);
-    imageFighter.attr("data-indexNumber", indexNumber[i]);
     imageFighter.attr("data-fighterName", fighterName[i]);
 
     //add to page
     $(".container-pick").append(imageFighter);
-    // $(".fighter").append(healthBarSpan);
+    $(".fighter").append(healthBarSpan);
 }
-//----------------------------------close for loop-----
 
-//------start on click events-----
 // when you pick your fighter and move the others
+
 $(document).on("click", ".fighter", function() {
-    var hasBeenClicked = true;
-    
-    var id = ($(this).attr("data-indexNumber"));
-    id = parseInt(id);
-    
+ 
     var myPick = $(this);
     myPick.addClass("my-pick");
 
@@ -63,44 +53,43 @@ $(document).on("click", ".fighter", function() {
 
 //picking an opponent to move to red corner
 $(document).on("click",".enemy", function(){
+    //make sure there is someone in blue corner  (helps at end of game also)
+    if ($(".my-pick").parent().is(".container-pick")) {
 
-    var myPick = $(this);
-    myPick.addClass("my-opponent");
+        var myPick = $(this);
+        myPick.addClass("my-opponent");
 
-    $(".enemy").each(function() {
-        if ($(this).hasClass("my-opponent")) {
-            $(".container-ring").append($(this));
-        } 
-        else {
-            $(".container-rest").append($(this)); 
-        }
-    })
+        $(".enemy").each(function() {
+            if ($(this).hasClass("my-opponent")) {
+                $(".container-ring").append($(this));
+            } 
+            else {
+                $(".container-rest").append($(this)); 
+            }
+        })
+    }
 });
-
-// if p is in a div
-
-
-// if ($(".container-ring").has(".my-opponent")){
-// console.log("ready for fight");
-// }
-
-
-
-
 
 //this is for the fight.. needs work
 // //when you click on a attack class
+   var damageCounter = 0;
+    var totalDamageTaken = 0;
+
 $(".attack-button").on("click", function() {
-    var damageCounter = 0;
-    //is there an opponent inthe red corner
-    if ($(".my-opponent").parent().is(".container-ring")) {
+  
+    //if there are fighters in both red and blue corners
+    if ($(".my-opponent").parent().is(".container-ring") 
+    &&  $(".my-pick").parent().is(".container-pick")) {
         
+        console.log("========begin attack==========");
+
+
         //damage and health values for both fighters
         var damageValue = ($(".my-pick").attr("data-attackPower"));
         var counterValue = ($(".my-opponent").attr("data-counterAttack"));
-        var myHealthRemaining = ($(".my-pick").attr("data-healthBar"));
+        myHealthRemaining = ($(".my-pick").attr("data-healthBar"));
         var oppHealthRemaining = ($(".my-opponent").attr("data-healthBar"));
-    
+                
         //parses string (html attribute) into integer
         damageCounter = parseInt(damageCounter);
         damageValue = parseInt(damageValue);
@@ -110,25 +99,54 @@ $(".attack-button").on("click", function() {
 
         //your fighter gains power throughout the tournament
         damageCounter = damageCounter + damageValue;
-        
-        myHealthRemaining = myHealthRemaining - counterValue;
+        totalDamageTaken = totalDamageTaken + counterValue;
+        myHealthRemaining = myHealthRemaining - totalDamageTaken;
         oppHealthRemaining = oppHealthRemaining - damageCounter;
-
-        // every click adds to global counter. will need to be changed
-        
-        var hasBeenClicked = true; 
-
-        console.log("attack for " + damageCounter);
-        console.log("enemy counters for " + counterValue);
-        console.log("my health is " + myHealthRemaining);
-        console.log("opponent health is " + oppHealthRemaining);
-
+    
+        //if opponent health is 0, they lose
         if(oppHealthRemaining <= 0){
+            console.log("attack for " + damageCounter);
             console.log("opp lost");
-            //change class defeated to make them disappear.
+            
+            //if opponent loses, i don't count their last hit. works
+            myHealthRemaining = myHealthRemaining + counterValue;
+            totalDamageTaken = totalDamageTaken - counterValue;
+            
+            //change class to 'defeated' to make them disappear.
             $(".my-opponent").attr("class", "defeated");
+            console.log("my health after the fight is " + myHealthRemaining);
+            console.log("total damage taken is " + totalDamageTaken);
+            console.log("next fight================");
+            
+        }
+
+        //if they don't lose , do you lose?
+        else if(myHealthRemaining <= 0){
+            console.log("you lose");
+            $(".my-pick").attr("class","defeated");
+
+            //reload page 
+            alert("You Lose. Try Again.")
+             location.reload();
+           
+        }
+
+        //if no one loses, fight still going on
+        else{
+            console.log("attack for " + damageCounter);
+            console.log("enemy counters for " + counterValue);
+            console.log("my health is " + myHealthRemaining);
+            console.log("opponent health is " + oppHealthRemaining);
+            console.log("total damage taken " + totalDamageTaken);
+            console.log("my health after the attack is " + myHealthRemaining);
         }
     }     
     
+    if (!$(".my-opponent").parent().is(".container-ring") 
+    &&  !$(".enemy").parent().is(".container-rest")){
+        alert("You win! Glory is yours!");
+        location.reload();
+    }
+
     
 })
