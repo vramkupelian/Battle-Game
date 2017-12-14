@@ -1,3 +1,4 @@
+
 .fighter{
     width           : 150px;
     height              : 150px;
@@ -8,22 +9,23 @@
     align-content       : center;
     text-align          : center;
     display             : inline-block;
-    object-fit: contain;
-zoom: 150%;
-
+    object-fit          : contain;
+    zoom                : 150%;
 }
+
+.my-pick{
+background-color: rgb(0, 60, 255);
+}
+
 .giant{
 margin: auto;
 width: 1000px;
-
-
-
 }
 .container{
 
     width               : auto;
     height              : 300px;
-    border              : 3px double rgb(75, 117, 255);
+    border              : 3px double rgb(0, 60, 255);
     display             : inline-block;
     margin           : auto;
     padding             : 5px;
