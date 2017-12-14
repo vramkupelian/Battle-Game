@@ -81,8 +81,9 @@ $(".attack-button").on("click", function() {
     if ($(".my-opponent").parent().is(".container-ring") 
     &&  $(".my-pick").parent().is(".container-pick")) {
         
-        console.log("========begin attack==========");
+        $(".empty-log").attr("class","battle-log");
 
+        console.log("========begin attack==========");
 
         //damage and health values for both fighters
         var damageValue = ($(".my-pick").attr("data-attackPower"));
@@ -103,11 +104,19 @@ $(".attack-button").on("click", function() {
         myHealthRemaining = myHealthRemaining - totalDamageTaken;
         oppHealthRemaining = oppHealthRemaining - damageCounter;
     
+        var informAttack = $(".battle-log").html(
+            "You attack for " + damageCounter + "<br>" +
+            "Enemy attacks for " + counterValue
+        );
+
+
         //if opponent health is 0, they lose
         if(oppHealthRemaining <= 0){
-            console.log("attack for " + damageCounter);
-            console.log("opp lost");
-            
+
+            $(".battle-log").html("You attack for " + damageCounter + "<br>" +
+            "Enemy attacks for " + counterValue + "<br>" + 
+            "Opponent lost!");
+                 
             //if opponent loses, i don't count their last hit. works
             myHealthRemaining = myHealthRemaining + counterValue;
             totalDamageTaken = totalDamageTaken - counterValue;
@@ -143,7 +152,8 @@ $(".attack-button").on("click", function() {
     }     
     
     if (!$(".my-opponent").parent().is(".container-ring") 
-    &&  !$(".enemy").parent().is(".container-rest")){
+    &&  !$(".enemy").parent().is(".container-rest")
+    &&  $(".my-pick").parent().is(".container-pick")){
         alert("You win! Glory is yours!");
         location.reload();
     }
