@@ -78,7 +78,8 @@ $(document).on("click",".enemy", function(){
 //this is for the fight.. needs work
 // //when you click on a attack class
     var damageCounter = 0;
-    var totalDamageTaken =0 ;
+    var totalDamageTaken = 0 ;
+  
 $(".attack-button").on("click", function() {
 
     var myHealthRemaining;
@@ -111,7 +112,7 @@ $(".attack-button").on("click", function() {
         totalDamageTaken = totalDamageTaken + counterValue;
         myHealthRemaining = myHealthRemaining - totalDamageTaken;
         oppHealthRemaining = oppHealthRemaining - damageCounter;
-    
+        $(".my-opponent").attr("data-healthBar", oppHealthRemaining);
         //if opponent health is 0, they lose
         if(oppHealthRemaining <= 0){
 
