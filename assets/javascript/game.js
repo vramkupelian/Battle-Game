@@ -117,7 +117,8 @@ $(".attack-button").on("click", function() {
         if(oppHealthRemaining <= 0){
 
             $(".battle-log").html("You attack for " + damageCounter + "<br>" + "Opponent lost!");
-                 
+        
+            
             //if opponent loses, i don't count their last hit. works
             myHealthRemaining = myHealthRemaining + counterValue;
             totalDamageTaken = totalDamageTaken - counterValue;
@@ -149,7 +150,10 @@ $(".attack-button").on("click", function() {
             console.log("my health after the attack is " + myHealthRemaining);
             var informAttack = $(".battle-log").html(
                 "You attack for " + damageCounter + "<br>" +
-                "Enemy attacks for " + counterValue
+                "Opponent's health is now " + oppHealthRemaining + "<br>" +
+                "Enemy attacks for " + counterValue + "<br>" +
+                "Your health is now " + myHealthRemaining
+
             );
     
     
