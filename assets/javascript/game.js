@@ -53,7 +53,6 @@ $(document).on("click", ".fighter", function() {
         if ($(this).hasClass("my-pick")) {
             $(".container-pick").append($(this));
             $(".container-pick").toggleClass("center");
-            $(".container-pick").addClass("side-center");
             $(".my-pick").addClass("noClick");
         } else {
             $(".container-rest").append($(this));
