@@ -3,17 +3,22 @@ var attackPower = [10,15,18,20];
 var counterAttack = [10,8,5,3];
 var fighterName = ["Bruce Lee", "Muhammad Ali", "Fedor", "Chuck Norris"];
 
-
 //creating elements
 for(var i =0; i < healthBar.length; i++){
     
     //For each iteration, create an imageFighter
+    var aFighter = {
+        name: fighterName[i],
+        health: healthBar[i],
+        attack: attackPower[i],
+        counter: counterAttack[i],
+    }
+
     var imageFighter = $("<img>");
     var healthBarSpan = $ ("<span>");
-    var nameSpan = $("<span>");
+    var nameSpan = $("<span>"+aFighter.name+"</span>");
     
     //give each imageFighter the class "fighter", css
-   
     imageFighter.addClass("fighter");
     // healthBarSpan.addClass("health-bar-span");
     nameSpan.addClass("name-span");
@@ -33,7 +38,7 @@ for(var i =0; i < healthBar.length; i++){
     $(".container-pick").append(imageFighter);
     // $(imageFighter).append(healthBarSpan);
     // $(nameSpan).append(nameSpan);
-    $(".fighter").html("<span>" + healthBar[i] + "</span>");
+    // $(".fighter").html("<span>" + healthBar[i] + "</span>");
 }
 
 
@@ -49,6 +54,7 @@ $(document).on("click", ".fighter", function() {
             $(".container-pick").append($(this));
         } else {
             $(".container-rest").append($(this));
+            $(".container-rest").toggleClass("hidden");
            //change class from fighter to enemy
             $(this).attr("class","enemy");
         }
@@ -67,9 +73,15 @@ $(document).on("click",".enemy", function(){
         $(".enemy").each(function() {
             if ($(this).hasClass("my-opponent")) {
                 $(".container-ring").append($(this));
+                $(".container-ring").toggleClass("hidden");
+                $(".container-rest").toggleClass("hidden");
+                $(".my-opponent").toggleClass("noClick");
+                $(".attack-button").toggleClass("hidden");                
+                
             } 
             else {
                 $(".container-rest").append($(this)); 
+                
             }
         })
     }
@@ -117,6 +129,9 @@ $(".attack-button").on("click", function() {
         if(oppHealthRemaining <= 0){
 
             $(".battle-log").html("You attack for " + damageCounter + "<br>" + "Opponent lost!");
+            $(".container-rest").toggleClass("hidden");
+            $(".container-ring").toggleClass("hidden");
+            $(".attack-button").toggleClass("hidden");
         
             
             //if opponent loses, i don't count their last hit. works
@@ -154,10 +169,7 @@ $(".attack-button").on("click", function() {
                 "Enemy attacks for " + counterValue + "<br>" +
                 "Your health is now " + myHealthRemaining
 
-            );
-    
-    
-            
+            );   
         }
     }     
     

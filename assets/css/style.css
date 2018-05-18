@@ -79,6 +79,7 @@ button{
 .container-rest{
     border              : 3px double rgb(255, 255, 255);
     color               : white;
+
 }
 .container-ring{
     border              : 3px double red;
@@ -107,4 +108,12 @@ span{
     height: auto;
     background-color: white;
     border: 3px solid white;
+}
+
+.hidden{
+    display: none;
+}
+
+.noClick {
+    pointer-events: none;
 }
