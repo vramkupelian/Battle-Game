@@ -1,6 +1,6 @@
 img{
-    width               : 150px;
-    height              : 150px;
+    width               : 120px;
+    height              : 120px;
     border              : 1px solid grey;
     background-color    : rgb(63, 63, 63);
     margin              : 5px;
@@ -31,7 +31,10 @@ img{
 
 .giant{
     margin              : auto;
-    width               : 1000px;
+    width               : fit-content;
+    display             : grid;
+    grid-template-rows  : 2fr,1fr,1fr,2fr; 
+    gap            : 1em;
 }
 
 .container{
@@ -40,7 +43,7 @@ img{
     border              : 3px double rgb(0, 60, 255);
     display             : inline-block;
     margin              : auto;
-    padding             : 5px;
+    /* padding             : 5px; */
     background-color: rgba(236, 250, 255, 0.507);
 }
 
@@ -51,7 +54,7 @@ h1, h3, .header{
 .header{
     background-color    : white;
     border              : 4px ridge grey;
-    max-width           : 300px;
+    max-width           : 100px;
     margin              : auto;
 }
 
@@ -65,7 +68,8 @@ h1, h3, .header{
 }
 
 button{
-    margin              : 20px;
+    /* margin-bottom       : 30px; */
+    /* margin-left         : 41px; */
     width               : 200px;
     height              : 100px;
     background-color    : rgb(104, 0, 0);
@@ -82,9 +86,10 @@ button{
 
 }
 .container-ring{
+    position            : absolute;
     border              : 3px double red;
     color               : red;
-    float: left;
+ 
 }
 
 .defeated{
@@ -92,6 +97,7 @@ button{
 }
 
 .battle-log{
+    position: relative;
     width               : auto;
     height              : auto;
     border              : 3px double rgb(104, 0, 0);
@@ -116,4 +122,19 @@ span{
 
 .noClick {
     pointer-events: none;
+}
+
+.center {
+    width: fit-content;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.side-center{
+    width: fit-content;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
 }

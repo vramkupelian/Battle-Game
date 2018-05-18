@@ -52,6 +52,9 @@ $(document).on("click", ".fighter", function() {
     $("img").each(function() {
         if ($(this).hasClass("my-pick")) {
             $(".container-pick").append($(this));
+            $(".container-pick").toggleClass("center");
+            $(".container-pick").addClass("side-center");
+            $(".my-pick").addClass("noClick");
         } else {
             $(".container-rest").append($(this));
             $(".container-rest").toggleClass("hidden");
@@ -93,6 +96,8 @@ $(document).on("click",".enemy", function(){
     var totalDamageTaken = 0 ;
   
 $(".attack-button").on("click", function() {
+    
+    $(".battle-log").removeClass("hidden");
 
     var myHealthRemaining;
     var oppHealthRemaining; 
